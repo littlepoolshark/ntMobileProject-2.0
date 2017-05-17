@@ -1,0 +1,13 @@
+{
+  "presets":[
+      // webpack understands the native import syntax, and uses it for tree shaking
+      //this option is related to Hot Module Replacement
+      ["es2015",{"modules":false}],
+      "react",
+      "stage-0"
+      ],
+  "plugins":[
+      "babel-plugin-transform-decorators-legacy",
+      "react-hot-loader/babel"// Enables React code to work with HMR.
+      ]
+}
