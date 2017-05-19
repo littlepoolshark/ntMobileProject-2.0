@@ -16,6 +16,7 @@
     * [Spread Operator](#spread-operator)
   * [Promises](#promises)
   * [Generators](#generators)
+  * [Classnames](#Classnames)
 * [CSS 语言](#CSS-语言)
   * [SUITM命名法](#SUITM命名法)
 
@@ -263,6 +264,12 @@ app.model({
   },
 });
 ```
+
+### Classnames
+
+在组件中，使用react官方推荐的classname模块来处理css类的条件式的合并。全局方法classnames接受的参数类型包括字符串，纯javascript对象，数组。
+
+详见[github](https://github.com/JedWatson/classnames)。
 
 ## CSS语言
 

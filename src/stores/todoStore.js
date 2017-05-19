@@ -2,9 +2,11 @@ import { observable, action, computed  } from "mobx";
 
 export default class TodoStore {
     @observable todoList;
+    @observable test;
 
     constructor(){
-        this.todoList=[]
+        this.todoList=[];
+        this.test="asdfsad";
     }
 
     @action addTodo(todoItem){

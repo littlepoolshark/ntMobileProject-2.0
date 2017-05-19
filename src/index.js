@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { Provider } from "mobx-react";
-import {  AppContainer } from "react-hot-loader";
+import { AppContainer } from "react-hot-loader";
 import App from "./components/App";
-import TodoStore from "./stores/todoStore";
-
-let todoStore= new TodoStore();
+import GlobalStore from "./stores/globalStore";
 
 
-const hotRender=(Component) => {
-    render(
-        <AppContainer>  
-            	<Provider store={todoStore} >
-					<Component />
-				</Provider>
-        </AppContainer>          
-    ,document.getElementById("root"));
+
+
+const hotRender = (Component) => {
+  render(
+    <AppContainer>
+        <Provider store={new GlobalStore()} >
+          <Component />
+        </Provider>
+    </AppContainer>
+    , document.getElementById("root"));
 }
 
 hotRender(App);
