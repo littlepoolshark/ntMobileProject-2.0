@@ -6,4 +6,10 @@ export default class GlobalStore {
     constructor(){
         this.globalText="this is some txt from GlobalStore";
     }
+
+    @action changeGlobalText(text){
+        if(!!text){
+            this.globalText=text;
+        }
+    }
 }

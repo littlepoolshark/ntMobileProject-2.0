@@ -1,6 +1,7 @@
 let path=require("path");
 let webpack=require("webpack");
-let HtmlWebpackPlugin=require("html-webpack-plugin");
+let HtmlWebpackPlugin=require("html-webpack-plugin");//generate a html file to serve the bundle.js of webpack build
+//let RemoveConsolePlugin =require("remove-console-plugin");//remove console.log and other statements from webpack build
 
 module.exports={
     entry:[
@@ -35,13 +36,36 @@ module.exports={
         // enable HMR on the server
         //Setting set devServer: { hot: true } causes webpack will expose the module.hot API to our code
     },
-    devtool:"eval",//这个配置项决定了webpack生成source map的方式，而不同的配置值会影响webpack的编译速度的。
+    devtool:"eval",
+    //这个配置项决定了webpack生成source map的方式，而不同的配置值会影响webpack的编译速度的。
+
     module:{
         rules:[
             {
                 test:/\.js$/,
                 exclude:/node_modules/,
                 loader:"babel-loader"
+            },
+            {
+                test:/\.scss|css$/,
+                //@see:https://webpack.js.org/loaders/sass-loader/#components/sidebar/sidebar.jsx
+
+                use:[
+                    "style-loader",
+                    //creates style nodes from Js strings
+
+                    "css-loader",
+                    //translated Css into CommonJS
+
+                    "postcss-loader",
+                    //using postcss tool to finished the extra job of Css(e.g. autoprefix plugin)
+
+                    "resolve-url-loader",
+                    //resolve the url("......") problems in Sass/Css file
+
+                    "sass-loader?sourceMap"
+                    //compiles Sass to Css
+                ]
             }
         ]
     },
@@ -52,8 +76,12 @@ module.exports={
          new webpack.NamedModulesPlugin(),
          // prints more readable module names in the browser console on HMR updates
 
-         new HtmlWebpackPlugin({ hash: false, template: "./index.html" })
+         new HtmlWebpackPlugin({ hash: false, template: "./index.html" }),
          //use the template to serve the bundle js
+
+         //new RemoveConsolePlugin()
+         //so weird,it does not work!!Maybe we should try it later.
+         //@see:https://github.com/matt-mcdaniel/RemoveConsolePlugin
     ]
 
 }

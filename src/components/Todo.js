@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
 import todoStore from "../stores/todoStore";
+import { Link } from "react-router-dom";
+import "../scss/todo.scss";
 
 
 @inject("store")
@@ -49,6 +51,8 @@ class Todo extends Component {
             totalTodoCount
         } = this.todo;
 
+        console.log(this.props.match);
+
         return (
             <div className="todo">
                 <div className="test">{this.globalText}</div>
@@ -70,6 +74,16 @@ class Todo extends Component {
                     }
                 </div>
                 <div className="todo-summary">{`总共有${totalTodoCount}个任务，已经完成了${finishedTodoCount}个。`}</div>
+                <Link
+                    to={{
+                        pathname:"/home",
+                        search:"?beforeComponent=todo"
+                    }}
+
+                    replace={false}
+                >
+                    <div>一个包含div的a链接</div>
+                </Link>
             </div>
         );
     }
