@@ -66,6 +66,13 @@ module.exports={
                     "sass-loader?sourceMap"
                     //compiles Sass to Css
                 ]
+            },
+            {
+                test:/\.(png|jpg|gif|woff|svg|ttf|otf)$/,
+                //return a  data URL if the file is smaller than a byte limit
+                //@see:https://webpack.js.org/loaders/url-loader/
+
+                loader:"url-loader?limit=25000"
             }
         ]
     },

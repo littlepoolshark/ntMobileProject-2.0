@@ -1,10 +1,14 @@
+import "../style/todo.scss";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
 import todoStore from "../stores/todoStore";
 import { Link } from "react-router-dom";
-import "../scss/todo.scss";
+import Icon from "./UIComponents/Icon";
+import Modal from "./UIComponents/modal/Modal";
+import Button from "./UIComponents/Button";
+
 
 
 @inject("store")
@@ -13,14 +17,31 @@ class Todo extends Component {
 
     constructor(props) {
         super(props);
-        this.globalText=this.props.store.globalText;
-        this.todo = new todoStore();
+        this.globalState=this.props.store;
+        this.localState = new todoStore();
+        this.state={
+            isModalOpen:false
+        }
+    }
+
+    openModal(){
+        this.setState({
+            isModalOpen:true
+        })
+    }
+
+    closeModal(callback){
+        this.setState({
+            isModalOpen:false
+        },() => {
+            callback && callback();
+        })
     }
 
     addTodo() {
         let taskName = this.refs.newItemField.value.trim();
         if (taskName) {
-            this.todo.addTodo({
+            this.localState.addTodo({
                 id: Math.random(),
                 taskName,
                 isFinished: false
@@ -30,11 +51,11 @@ class Todo extends Component {
     }
 
     toggleIsFinished(taskId) {
-        this.todo.toggleIsFinished(taskId);
+        this.localState.toggleIsFinished(taskId);
     }
 
     removeTodo(taskId) {
-        this.todo.removeTodo(taskId);
+        this.localState.removeTodo(taskId);
     }
 
     handleFieldKeyDown(event) {
@@ -45,20 +66,24 @@ class Todo extends Component {
 
     render() {
         let {
+            globalText
+        }=this.globalState;
+
+        let {
             todoList,
             filterType,
             finishedTodoCount,
             totalTodoCount
-        } = this.todo;
+        } = this.localState;
 
-        console.log(this.props.match);
 
         return (
             <div className="todo">
-                <div className="test">{this.globalText}</div>
+                <div className="test">{globalText}</div>
+                <Icon name="right" style={{color:"red",fontSize:"12px"}}/>
                 <div className="todo-form">
                     <input type="text" ref="newItemField" onKeyDown={(event) => { this.handleFieldKeyDown(event) }} />
-                    <button onClick={() => { this.addTodo() }}>增加</button>
+                    <Button amStyle="primary" amSize="small" onClick={() => { this.openModal() }}>增加</Button>
                 </div>
                 <div className="todo-list">
                     {
@@ -84,6 +109,13 @@ class Todo extends Component {
                 >
                     <div>一个包含div的a链接</div>
                 </Link>
+                <Modal
+                    isOpen={this.state.isModalOpen}
+                    role="alert"
+                    onDismiss={() => {this.closeModal(() => {  this.addTodo() })}}
+                >
+                    测试 ui state 跟组件的组合！
+                </Modal>
             </div>
         );
     }

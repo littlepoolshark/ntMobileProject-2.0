@@ -1,3 +1,4 @@
+import "../style/app.scss";
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Link, NavLink, Redirect } from "react-router-dom";

@@ -1,0 +1,89 @@
+// Amaze UI Mobile: Tabs
+// =============================================================================
+
+// Output
+// -----------------------------------------------------------------------------
+.#{$tabs-prefix} {
+  margin-top:0;
+  margin-bottom:0;
+  background-color:transparent;
+  @extend %card-nested-component;
+}
+
+.#{$tabs-prefix}-nav {
+  margin-bottom:-1px;
+  padding:rem-calc(5) rem-calc(15);
+  border-top:1px solid $separation-line-color;
+  border-bottom:1px solid $separation-line-color;
+  background:#fff;
+
+  .#{$button-prefix} {
+    @extend %text-truncate;
+  }
+
+  .btn-sm {
+    @include color-and-fontSize($C3,$T5);
+  }
+
+  .btn-hollow.btn-primary {
+    border:none;
+    color:$C3;
+
+    &.active {
+      background:#fff;
+      color:$C1;
+    }
+  }
+
+  .slide-line {
+    width:rem-calc(50);
+    height:2px;
+    background-color:$C1;
+    position: absolute;
+    left:0;
+    bottom:0;
+    transition:left 0.2s ease-in-out;
+  }
+}
+
+.#{$tabs-prefix}-body {
+  position: relative;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.#{$tab-prefix}-panel {
+  $panel: &;
+
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  padding:0;
+  visibility: hidden;
+  transition: transform 0.4s;
+  transform: translateX(-100%);
+
+  &.#{map_get($am-states, active)} {
+    position: relative;
+    z-index: 100;
+    visibility: visible;
+    transform: translateX(0);
+
+    & ~ #{$panel} {
+      transform: translateX(100%);
+    }
+  }
+
+  // panel without padding
+  &#{$panel}-no-padded {
+    padding: 0;
+  }
+}
+
+// Mofidier: inset
+// -----------------------------------------------------------------------------
+.#{$tabs-prefix}-inset {
+  margin-left: $global-spacing;
+  margin-right: $global-spacing;
+}

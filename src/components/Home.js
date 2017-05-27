@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from "mobx-react";
+import Button from "./UIComponents/Button";
 
 
 @inject("store")
@@ -19,9 +20,10 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <img src={require("../image/test.jpg")} alt=""/>
                 This is Home Page.<br/>
                 <input type="text" ref="globalText"/>
-                <button onClick={this.changeGlobalText}>change globalText</button>
+                <Button amStyle="primary" block radius onClick={this.changeGlobalText}>change globalText</Button>
             </div>
         );
     }
