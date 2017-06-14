@@ -1,6 +1,9 @@
 
-这是重构所用到的知识的集合。
-
+## 引言
+  该技术规范文档是根据笔者多年的前端实践经验和对相关技术的最佳实践总结的，如有失偏颇，还请读者指出和修正，或者提供更好的规范作为代替。                                       
+<div style="text-align:right;">刘其深</div>
+<div style="text-align:right;">2017-06-04</div>
+                                          
 ## 目录
 
 * [JavaScript 语言](#javascript-语言)
@@ -11,7 +14,7 @@
   * [箭头函数](#箭头函数)
   * [模块的 Import 和 Export](#模块的-import-和-export)
   * [ES6 对象和数组](#es6-对象和数组)
-    * [析构赋值](#析构赋值)
+    * [解构赋值](#解构赋值)
     * [对象字面量改进](#对象字面量改进)
     * [Spread Operator](#spread-operator)
   * [Promises](#promises)
@@ -20,20 +23,21 @@
 * [CSS 语言](#css-语言)
   * [SUITM命名法](#suit命名法)
   * [样式预处理器](#样式预处理器)
-  * [布局方案](#布局方案)
+  * [布局方案](#布局方案)
   * [尺寸单位](#尺寸单位)
-* [图片](#图片)
+* [图片资源](#图片资源)
 * [React/JSX](#react/jsx)
+* [项目技术方案选型](#项目技术方案选型)
 
 ## JavaScript 语言
 
-现代无疑时`ES6`的时代了，为了利用`ES6`对生产所带来的便利，我们得开始统一使用`ES6`的语法来编写代码。ES6的主流的语法包括一下几点：
+当今无疑时`ES6`的时代了。为了利用`ES6`给生产所带来的便利，我们得开始统一使用`ES6`的语法来编写代码。ES6的主流的语法包括一下几点：
 
 ### 变量声明
 
 #### const 和 let
 
-不要用 `var`，而是用 `const` 和 `let`，分别表示常量和变量。不同于 `var` 的函数作用域，`const` 和 `let` 都是块级作用域。
+不要用 `var`，而是用 `const` 和 `let`，分别表示常量和变量。不同于 `var` 的声明提升，`const` 和 `let` 都是块级作用域。
 
 ```javascript
 const DELAY = 1000;
@@ -42,7 +46,7 @@ let count = 0;
 count = count + 1;
 ```
 
-#### 模板字符串
+### 模板字符串
 
 模板字符串提供了另一种做字符串组合的方法。
 
@@ -57,7 +61,7 @@ const content = `
 `;
 ```
 
-#### 默认参数
+### 默认参数
 
 ```javascript
 function logActivity(activity = 'skiing') {
@@ -95,11 +99,11 @@ logActivity();  // skiing
 
 ```javascript
 // 引入全部
-import dva from 'dva';
+import React from 'react';
 
 // 引入部分
-import { connect } from 'dva';
-import { Link, Route } from 'dva/router';
+import React, { Component, PropTypes } from 'react;
+import { Link, Route } from 'react-router';
 
 // 引入全部并作为 github 对象
 import * as github from './services/github';
@@ -112,9 +116,9 @@ export class App extend Component {};
 
 ### ES6 对象和数组
 
-#### 析构赋值
+#### 解构赋值
 
-析构赋值让我们从 Object 或 Array 里取部分数据存为变量。
+解构赋值让我们从 Object 或 Array 里取部分数据存为变量。
 
 ```javascript
 // 对象
@@ -128,7 +132,7 @@ const [foo, bar] = arr;
 console.log(foo);  // 1
 ```
 
-我们也可以析构传入的函数参数。
+我们也可以解构传入的函数参数。
 
 ```javascript
 const add = (state, { payload }) => {
@@ -136,7 +140,7 @@ const add = (state, { payload }) => {
 };
 ```
 
-析构时还可以配 alias，让代码更具有语义。
+解构时还可以配 alias，让代码更具有语义。
 
 ```javascript
 const add = (state, { payload: todo }) => {
@@ -144,9 +148,9 @@ const add = (state, { payload: todo }) => {
 };
 ```
 
-#### 对象字面量改进
+### 对象字面量改进
 
-这是析构的反向操作，用于重新组织一个 Object 。
+这是解构的反向操作，用于重新组织一个 Object 。
 
 ```javascript
 const name = 'duoduo';
@@ -168,7 +172,7 @@ app.model({
 });
 ```
 
-#### Spread Operator
+### Spread Operator
 
 Spread Operator 即 3 个点 `...`，有几种不同的使用方法。
 
@@ -256,7 +260,7 @@ delay(1000).then(_ => {
 
 ### Generators
 
-dva 的 effects 是通过 generator 组织的。Generator 返回的是迭代器，通过 `yield` 关键字实现暂停功能。
+我们拿淘宝的前端团队的dva框架来举例说明一下。dva 的 effects 是通过 generator 组织的。Generator 返回的是迭代器，通过 `yield` 关键字实现暂停功能。
 
 这是一个典型的 dva effect，通过 `yield` 把异步逻辑通过同步的方式组织起来。
 
@@ -274,13 +278,13 @@ app.model({
 
 ### Classnames
 
-在组件中，使用react官方推荐的classname模块来处理css类的条件式的合并。全局方法classnames接受的参数类型包括字符串，纯javascript对象，数组。
+在React组件中，使用react官方推荐的classname模块来处理css类的条件式的合并。全局方法classnames接受的参数类型包括字符串，纯javascript对象，数组。
 
 详见[github](https://github.com/JedWatson/classnames)。
 
 ## CSS语言
 
-#### SUIT命名法
+### SUIT命名法
 
 SUIT命名法是著名的BEM命名法的一个变种或者说是改进。SUIT命名法包括六个概念，分别是`结构`（Utilities）,`组件`（Componnet），`修饰器`（Modifier），`后代/子组件`（Descendants）和`状态`（states）。
 
@@ -288,30 +292,30 @@ Component后面又可以追加修饰器，后台/子组件和状态。
 
 SUIT使用 Pascal命名法（别名叫做大驼峰命名法） 、 驼峰命名法 和破折号。在BEM中，约定命名使用到的破折号和下划线的数量，常常给人带来困惑。例如，在BEM中的命名方式 .search-form__text-field 和SUIT的命名方式 .SearchForm-textField 。
 
-##### Utilities
+#### Utilities
 
 Utilities是用来处理结构和位置方面的样式，组件中也可以用这种方式来写。常常在驼峰命名前加一个 u- 前缀。例如 .u-clearFix 。
 
-##### Components
+#### Components
 
 SUIT中的Components就相当于BEM中的Block。组件的命名方式常常使用pascal命名，也更适合SUIT，使它们更容易识别。例如 .SearcForm 。
 
-##### 组件命名空间
+#### 组件命名空间
 
 组件可以在命名前加一个 nmsp- 这样的命名空间，用来防止类名的冲突。比如 .mine-SearchForm 。
 
-##### Descendants
+#### Descendants
 
 SUIT中的Descendants相当于BEM中的Element。它使用破折号 - 和驼峰命名结合在一起来。例如 .SearchForm-heading ， .SearchForm-textField 和 .SearchForm-submitButto 。
 
 
-##### Modifier
+#### Modifier
 
 SUIT中的Modifier和BEM中的一样，但SUIT对他们的角色控制的更为严格。SUIT中的Modifier只用于组件(Components)上，不用于Dedicated上。它也不能用于表示状态(State)变化，就算要用于状态的变化，SUIT也有自己一套专用的命名约定。
 
 Modifier都用两个破折号 -- 来连接。一般用形容词来传达语义。例如： SearchForm--advanced，person--tall 。
 
-##### State
+#### State
 
 State是用来反映组件更改的状态。通过不同的修饰词，反映出组件修改后的基本外观。如果有必要，State也可以应用于Descendent中。
 
@@ -319,27 +323,28 @@ State一般都在驼峰命名前添加 is- 前缀。一般用is+形容词来传�
 
 注：这段落的知识收集和整理来自于[这个网址](http://www.tuicool.com/articles/aayEF3)。
 
-#### 样式预处理器
+### 样式预处理器
 
-样式预处理器采用sass。sass有四大特性：`变量`,`mixin`,`extend`,`function`和模块导入`@import`。每一个项目对sass的应用一般情况下应该包含一下几个方面：
+样式预处理器采用`sass`。`sass`有四大特性：`变量`,`mixin`,`extend`,`function`和模块导入`@import`。每一个项目对sass的应用一般情况下应该包含一下几个方面：
 
-1. 变量。前端开发者工程师每接手一个新项目的时候，都应该站在样式的全局UI规范和组件化设计去引导UI设计师进行UI设计。然后，我们基于UI设计师的全局UI规范去定义一份全局样式的变量文件_variables.scss，通过此文件，我们对全局的样式进行集中式的管理。
+ - 变量。前端开发者工程师每接手一个新项目的时候，都应该站在样式的全局UI规范和组件化设计去引导UI设计师进行UI设计。然后，我们基于UI设计师的全局UI规范去定义一份全局样式的变量文件_variables.scss，通过此文件，我们对全局的样式进行集中式的管理。
 
-2. mixin。样式的工具类都定义在_mixins.scss文件中。例如对行内元素排版的工具类`.text-＊`,清除浮动的`.clearfix`，图片的自适应类`.responsive-img`，在移动端渲染0.5px的线条的`.point5pxLine`等等都可以放在此文件中，以便做到开开发中开箱即用，同时也能方便地跨项目共享，大大提高了样式开发的生产效率。
+ - mixin。样式的工具类都定义在_mixins.scss文件中。例如对行内元素排版的工具类`.text-＊`,清除浮动的`.clearfix`，图片的自适应类`.responsive-img`，在移动端渲染0.5px的线条的`.point5pxLine`等等都可以放在此文件中，以便做到开开发中开箱即用，同时也能方便地跨项目共享，大大提高了样式开发的生产效率。
 
 
 
-#### 布局方案
+### 布局方案
 
-使用`flexbox`布局为主，传统的布局为辅的布局方案。`W3C`宣称，`flexbox`能够在99%的程度上代替上一代布局方案，所以，我们只有在确实无法利用flexbox完成的场景才去降级到传统的布局方案。
+使用`flexbox`布局为主，传统的布局为辅的布局方案。`W3C`宣称，`flexbox`能够在99%的程度上代替上一代布局方案，所以，我们只有在确实无法利用flexbox完成的场景才去降级到传统的布局方案。
 
-#### 尺寸单位
+### 尺寸单位
 
-为了实现对各种尺寸的屏幕和各种默认字体大小的浏览器的响应，提高用户体验，一律采用`rem`作为尺寸的单位。
+为了实现对各种尺寸的屏幕和各种默认字体大小的浏览器的响应，提高用户体验，一律采用`rem`作为尺寸的单位。
 
-## 图片
+## 图片资源
 
-对于UI设计师所产生的小于2500B的图片一律实现为字体图标。
+对于UI设计师所产生的小于2500B的图片一律实现为字体图标。
+
 
 
 
@@ -354,8 +359,7 @@ State一般都在驼峰命名前添加 is- 前缀。一般用is+形容词来传�
 
 ## 组件创建方式
 
-React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass`](https://facebook.github.io/react/docs/react-without-es6.html)、[函数式组件](https://facebook.github.io/react/docs/components-and-props.html#functional-and-class-components) 。
-
+React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass`](https://facebook.github.io/react/docs/react-without-es6.html)、[函数式组件](https://facebook.github.io/react/docs/components-and-props.html#functional-and-class-components) (在React的15.5.0版本中，使用React.createClass方式已经建议废弃了)。
 - 如果组件有内部状态，或者使用了生命周期方法，优先使用 `class extends React.Component` ：
 
     ```js
@@ -407,8 +411,10 @@ React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass
 
 - [不要使用 mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html)；
 - 使用 ES6 class 语法的 React 组件不支持 mixins（参考[高阶组件](https://facebook.github.io/react/docs/higher-order-components.html)）。
+- 
 
->   Why? Mixins introduce implicit dependencies, cause name clashes, and cause snowballing complexity. Most use cases for mixins can be accomplished in better ways via components, higher-order components, or utility modules.
+
+>   为什么呢？因为Mixins模糊了依赖的来处，引起命名冲突和滚雪球式地增加了代码的复杂性。在大部分场景，Mixins可以由组件，高阶组件和共用模块来代替。
 
 
 ## 命名规范
@@ -470,9 +476,9 @@ React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass
     ReactDOM.render(myDivElement, mountNode);
     ```
 	
-- **高阶组件命名**: Use a composite of the higher-order component's name and the passed-in component's name as the `displayName` on the generated component. For example, the higher-order component `withFoo()`, when passed a component `Bar` should produce a component with a `displayName` of `withFoo(Bar)`.
+- **高阶组件命名**: `withFoo(Bar)`.高阶组件的名称（displayName属性）应该跟被组合的组件的名称关联起来。例如：有一个高阶组件`withFoo()`,当它要跟一个组件`Bar`组价关联起来的话，那么这个高阶组件所返回的组件的displayName属性的值应该为`withFoo(Bar)`。
 
-    > Why? A component's `displayName` may be used by developer tools or in error messages, and having a value that clearly expresses this relationship helps people understand what is happening.
+    > 为什么？因为一个组件的display值很有可能用于开发者工具或者控制台打印的错误消息中。这对于开发者了解所发生的事情大有裨益。
 
     ```js
     // bad
@@ -555,7 +561,6 @@ React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass
 - 使用 `className` 代替 `class` 属性；
 - 使用 `htmlFor` 代替 `for` 属性；
 - 不要把 DOM 组件的属性用作其他用途。
-    > Why? People expect props like `style` and `className` to mean one specific thing. Varying this API for a subset of your app makes the code less readable and less maintainable, and may cause bugs.
 
     ```js
     // bad
@@ -697,7 +702,7 @@ React 中可以通过三种方式创建组件：ES6 `class`、[`createReactClass
 - 组件属性都应该在 `propTypes` 中声明类型；
 - 始终明确指定非必选属性的默认值。
 
-> Why? propTypes are a form of documentation, and providing defaultProps means the reader of your code doesn’t have to assume as much. In addition, it can mean that your code can omit certain type checks.
+> 为什么？`propTypes`作为一个组件的文档表格，是十分的重要的。同时，提供一个默认的defaultProps有助于消除源码阅读者的不必要疑惑。除此之外，它也具有了相当于propTypes的属性类型文档说明的功效。
 
 ```js
 // bad
@@ -728,60 +733,6 @@ SFC.defaultProps = {
 };
 ```
 
-### A11Y
-
-- Always include an `alt` prop on `<img>` tags. If the image is presentational, `alt` can be an empty string or the `<img>` must have `role="presentation"`. eslint: [`jsx-a11y/alt-text`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md)
-
-  ```js
-  // bad
-  <img src="hello.jpg" />
-
-  // good
-  <img src="hello.jpg" alt="Me waving hello" />
-
-  // good
-  <img src="hello.jpg" alt="" />
-
-  // good
-  <img src="hello.jpg" role="presentation" />
-  ```
-
-- Do not use words like "image", "photo", or "picture" in `<img>` `alt` props. eslint: [`jsx-a11y/img-redundant-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
-
-  > Why? Screenreaders already announce `img` elements as images, so there is no need to include this information in the alt text.
-
-  ```js
-  // bad
-  <img src="hello.jpg" alt="Picture of me waving hello" />
-
-  // good
-  <img src="hello.jpg" alt="Me waving hello" />
-  ```
-
-- Use only valid, non-abstract [ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions). eslint: [`jsx-a11y/aria-role`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-role.md)
-
-  ```js
-  // bad - not an ARIA role
-  <div role="datepicker" />
-
-  // bad - abstract ARIA role
-  <div role="range" />
-
-  // good
-  <div role="button" />
-  ```
-
-- Do not use `accessKey` on elements. eslint: [`jsx-a11y/no-access-key`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
-
-> Why? Inconsistencies between keyboard shortcuts and keyboard commands used by people using screenreaders and keyboards complicate accessibility.
-
-```js
-// bad
-<div accessKey="h" />
-
-// good
-<div />
-```
 
 ## 引号
 
@@ -952,7 +903,7 @@ const content = (
 
   - 在 `constructor` 中绑定 `this`，而不是引用的时候绑定。eslint: [`react/jsx-no-bind`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
 
-    > Why? A bind call in the render path creates a brand new function on every single render.
+    > 为什么？因为对bind的每一个执行都会产生一个新函数引用，以至于每一次render的重新调用都会导致bind所在的组件的重新渲染，这很浪费性能。
 
     ```js
     // bad
@@ -984,28 +935,6 @@ const content = (
     }
     ```
 
-  - 不要使用下划线作为 React 组件方法的前缀。
-    > Why? Underscore prefixes are sometimes used as a convention in other languages to denote privacy. But, unlike those languages, there is no native support for privacy in JavaScript, everything is public. Regardless of your intentions, adding underscore prefixes to your properties does not actually make them private, and any property (underscore-prefixed or not) should be treated as being public. See issues [#1024](https://github.com/airbnb/javascript/issues/1024), and [#490](https://github.com/airbnb/javascript/issues/490) for a more in-depth discussion.
-
-    ```js
-    // bad
-    React.createClass({
-      _onClickSubmit() {
-        // do stuff
-      },
-
-      // other stuff
-    });
-
-    // good
-    class extends React.Component {
-      onClickSubmit() {
-        // do stuff
-      }
-
-      // other stuff
-    }
-    ```
 
   - `render` 方法中应该始终返回值。eslint: [`react/require-render-return`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md)
 
@@ -1174,7 +1103,13 @@ const content = (
       </Nav>
     );
     ```
+    
+    
 
+# 前端技术方案选型
+
+  - 对于中小型规模的项目采用react + react-router + mobx。
+  - 对于大型规模的项目采用react + react-router + redux。
 
 
 
