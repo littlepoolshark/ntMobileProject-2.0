@@ -14,7 +14,7 @@
   * [箭头函数](#箭头函数)
   * [模块的 Import 和 Export](#模块的-import-和-export)
   * [ES6 对象和数组](#es6-对象和数组)
-    * [析构赋值](#析构赋值)
+    * [解构赋值](#解构赋值)
     * [对象字面量改进](#对象字面量改进)
     * [Spread Operator](#spread-operator)
   * [Promises](#promises)
@@ -37,7 +37,7 @@
 
 #### const 和 let
 
-不要用 `var`，而是用 `const` 和 `let`，分别表示常量和变量。不同于 `var` 的函数作用域，`const` 和 `let` 都是块级作用域。
+不要用 `var`，而是用 `const` 和 `let`，分别表示常量和变量。不同于 `var` 的声明提升，`const` 和 `let` 都是块级作用域。
 
 ```javascript
 const DELAY = 1000;
@@ -116,9 +116,9 @@ export class App extend Component {};
 
 ### ES6 对象和数组
 
-#### 析构赋值
+#### 解构赋值
 
-析构赋值让我们从 Object 或 Array 里取部分数据存为变量。
+解构赋值让我们从 Object 或 Array 里取部分数据存为变量。
 
 ```javascript
 // 对象
@@ -132,7 +132,7 @@ const [foo, bar] = arr;
 console.log(foo);  // 1
 ```
 
-我们也可以析构传入的函数参数。
+我们也可以解构传入的函数参数。
 
 ```javascript
 const add = (state, { payload }) => {
@@ -140,7 +140,7 @@ const add = (state, { payload }) => {
 };
 ```
 
-析构时还可以配 alias，让代码更具有语义。
+解构时还可以配 alias，让代码更具有语义。
 
 ```javascript
 const add = (state, { payload: todo }) => {
@@ -150,7 +150,7 @@ const add = (state, { payload: todo }) => {
 
 ### 对象字面量改进
 
-这是析构的反向操作，用于重新组织一个 Object 。
+这是解构的反向操作，用于重新组织一个 Object 。
 
 ```javascript
 const name = 'duoduo';
