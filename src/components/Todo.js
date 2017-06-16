@@ -1,6 +1,7 @@
 import "../style/todo.scss";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import className from 'classnames';
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
 import todoStore from "../stores/todoStore";
@@ -8,6 +9,28 @@ import { Link } from "react-router-dom";
 import Icon from "./UIComponents/Icon";
 import Modal from "./UIComponents/modal/Modal";
 import Button from "./UIComponents/Button";
+
+ class mixins extends Component {
+    constructor(props){
+        super(props);
+    } 
+    foo(){
+        console.log(this.props)
+    }
+}
+
+
+class TestDecorator extends mixins {
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return (
+            <div>{this.foo()}</div>
+        )
+    }
+}
+
 
 
 
@@ -76,11 +99,14 @@ class Todo extends Component {
             totalTodoCount
         } = this.localState;
 
+ 
+
 
         return (
             <div className="todo">
+                <TestDecorator isTest name="sam liu" isBill/>
                 <div className="test">{globalText}</div>
-                <Icon name="right" style={{color:"red",fontSize:"12px"}}/>
+                <Icon name="right"  amStyle="primary"/>
                 <div className="todo-form">
                     <input type="text" ref="newItemField" onKeyDown={(event) => { this.handleFieldKeyDown(event) }} />
                     <Button amStyle="primary" amSize="small" onClick={() => { this.openModal() }}>增加</Button>

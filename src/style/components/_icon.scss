@@ -6,6 +6,12 @@
 
 // Output
 // -----------------------------------------------------------------------------
+$mapStateToColor:(
+  primary:$C1,
+  active:red,
+  disabled:#eee
+);
+
 @font-face {
   font-family: icomoon;
   font-weight: normal;
@@ -30,6 +36,12 @@
 
   .#{$button-prefix} & {
     font-size: inherit;
+  }
+}
+
+@each $icon-state, $icon-color in $mapStateToColor {
+  .#{$icon-prefix}-#{$icon-state} {
+    color:$icon-color;
   }
 }
 

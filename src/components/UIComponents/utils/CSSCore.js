@@ -21,8 +21,8 @@ let CSSCore = {
    */
   addClass(element, className) {
     if (className) {
-      if (element.classList) {
-        element.classList.add(className);
+      if (element.classList) {//if current environment/context have such attribute "classList"
+        element.classList.add(className);//here,there is a API of "classList" which I am not familiar with--->add() 
       } else if (!CSSCore.hasClass(element, className)) {
         element.className = element.className + ' ' + className;
       }
