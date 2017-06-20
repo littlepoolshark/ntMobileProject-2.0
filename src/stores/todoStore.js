@@ -3,14 +3,17 @@ import { observable, action, computed  } from "mobx";
 export default class TodoStore {
     @observable todoList;
     @observable test;
+    @observable newTodoItem;
 
     constructor(){
         this.todoList=[];
         this.test="asdfsad";
+        this.newTodoItem="亲，您还有什么没干呢？"
     }
 
     @action addTodo(todoItem){
-        this.todoList.push(todoItem);
+        this.todoList.push({...todoItem,taskName:this.newTodoItem});
+        this.newTodoItem="";
     }
 
     @action toggleIsFinished(tasKId){
@@ -29,6 +32,10 @@ export default class TodoStore {
         this.todoList=this.todoList.filter((item,index) => {
             return item.id !== taskId && item;
         })
+    }
+
+    @action changeNewItemValue(newValue){
+        this.newTodoItem=newValue;
     }
 
     @computed get totalTodoCount(){
