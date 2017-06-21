@@ -64,7 +64,7 @@ class Todo extends Component {
     }
 
     handleChange = (event) => {
-        let newValue = event.target.value;
+        let newValue=event.target.value;
         this.localState.changeNewItemValue(newValue);
     }
 
@@ -105,8 +105,9 @@ class Todo extends Component {
                                 errorMsg:"必须为100的整数倍！"
                             }
                         ]}
+                        interceptor={["isNumber","length<11"]}
                     />
-                    <Button amStyle="primary" amSize="small" onClick={() => { this.openModal() } ref="addTodoItemBtn" }>增加</Button>
+                    <Button amStyle="primary" amSize="small" onClick={() => { this.openModal() }  }>增加</Button>
                 </div>
                 <div className="todo-list">
                     {
