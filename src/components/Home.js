@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from "mobx-react";
 import Button from "./UIComponents/Button";
-import DatePicker from "react-mobile-datepicker";
+//import DatePicker from "react-mobile-datepicker";
 
 
 @inject("store")
@@ -49,14 +49,14 @@ class Home extends Component {
                 {this.dateFormater(this.state.time)}<br/>
                 <input type="text" ref="globalText"/>
                 <Button amStyle="primary" block radius onClick={this.handleOpenDatePicker}>change globalText</Button>
-                <DatePicker
+                {/*<DatePicker
 					value={this.state.time}
 					isOpen={this.state.isOpen}
 					onSelect={this.handleSelect}
 					onCancel={this.handleCancel} 
                     theme="ios"
                     dateFormat={["YYYY","M","D"]}
-                />
+                />*/}
             </div>
         );
     }

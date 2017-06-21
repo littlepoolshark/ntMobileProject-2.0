@@ -3,6 +3,11 @@ import Field from "../UIComponents/Field";
 
 function Validator(WrappedComponent){
     class Validator extends Component {
+
+        proc(WrappedComponentInstance){
+            console.log(WrappedComponentInstance.refs.field.value);
+        }
+
         componentDidMount(){
             console.log("into HOC componentDidMount");
         }
@@ -26,7 +31,8 @@ function Validator(WrappedComponent){
 
             let newProps={
                 value,
-                ...otherProps
+                ...otherProps,
+                ref:this.proc.bind(this)
             };
 
             return <WrappedComponent {...newProps} />  
