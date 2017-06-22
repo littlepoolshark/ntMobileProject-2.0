@@ -4,11 +4,38 @@ export default class TodoStore {
     @observable todoList;
     @observable test;
     @observable newTodoItem;
+    @observable userName;
+
 
     constructor(){
         this.todoList=[];
         this.test="asdfsad";
-        this.newTodoItem="亲，您还有什么没干呢？"
+        this.newTodoItem="13682330541";
+        this.userName="sam liu";
+
+        this.checker={
+            newTodoItem:[
+                {
+                    rule:value => value !== "",
+                    errorMsg:"新事项不能为空，请重新输入！"
+                },
+                {
+                    rule:value => value.length === 11,
+                    errorMsg:"手机号码的格式不对，请检查！"
+                },
+            ],
+            userName:[
+                {
+                    rule:value => value !== "",
+                    errorMsg:"用户名不能为空，请重新输入！"
+                },
+                 {
+                    rule:value => value.length < 30,
+                    errorMsg:"用户名长度不合格，请检查！"
+                },
+            ]
+        }
+
     }
 
     @action addTodo(todoItem){
@@ -34,8 +61,8 @@ export default class TodoStore {
         })
     }
 
-    @action changeNewItemValue(newValue){
-        this.newTodoItem=newValue;
+    @action changeNewItemValue(fieldName,newValue){
+        this[fieldName]=newValue;
     }
 
     @computed get totalTodoCount(){
@@ -50,5 +77,27 @@ export default class TodoStore {
         return this.todoList.filter((item,index) => !item.isFinished).length;
     }
 
+    formCheckResult(){
+        let formCheckResult={
+            success:true,
+            errorMsg:""
+        };
+
+        let fields=Object.keys(this.checker);
+
+        for(let i=0; i< fields.length ; i++){
+            let rules=this.checker[fields[i]];
+            for(let j=0; j<rules.length ; j++){
+                console.log(this[fields[i]])
+                if(!rules[j].rule.call(null,this[fields[i]])){
+                    formCheckResult.success=false;
+                    formCheckResult.errorMsg=rules[j].errorMsg;
+                    break;
+                }
+            }
+        }
+
+        return formCheckResult;   
+    }
 
 }

@@ -5,7 +5,7 @@
 * @author sam liu
 * @date 2016-06-15
 */
-let microEvent=require("../lib/microevent");
+let microEvent=require("./utils/microevent");
 let pubsub={};
 let msgBoxContainer=null;
 microEvent.mixin(pubsub);

@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import Icon from "./UIComponents/Icon";
 import Modal from "./UIComponents/modal/Modal";
 import Button from "./UIComponents/Button";
-import Field from "./HOCs/Validator";
+import Message from "./UIComponents/Message";
+import FieldWithValidator from "./HOCs/Validator";
 
 
 
@@ -40,6 +41,15 @@ class Todo extends Component {
         })
     }
 
+    handleAddTodoBtnClick = () => {
+        let formCheckResult=this.localState.formCheckResult();
+        if (formCheckResult.success) {
+            this.openModal();
+        } else {
+            Message.broadcast(formCheckResult.errorMsg);
+        }
+    }
+
     addTodo() {
         if (this.localState.newTodoItem) {
             this.localState.addTodo({
@@ -63,9 +73,9 @@ class Todo extends Component {
         }
     }
 
-    handleChange = (event) => {
-        let newValue=event.target.value;
-        this.localState.changeNewItemValue(newValue);
+    handleChange = (fieldName,newValue) => {
+        //let newValue=event.target.value;
+        this.localState.changeNewItemValue(fieldName,newValue);
     }
 
     render() {
@@ -78,36 +88,33 @@ class Todo extends Component {
             filterType,
             finishedTodoCount,
             totalTodoCount,
-            newTodoItem
+            newTodoItem,
+            formCheckResult,
+            userName
         } = this.localState;
 
-
-
-
+        console.log('userName:',userName)
+        
         return (
             <div className="todo">
                 <div className="test">{globalText}</div>
                 <Icon name="right" amStyle="primary" />
                 <div className="todo-form">
-                    <Field
+                    <FieldWithValidator
                         type="text"
-                        ref="newItemField"
+                        fieldName="newTodoItem"
                         onKeyDown={(event) => { this.handleFieldKeyDown(event) }}
                         value={newTodoItem}
                         onChange={this.handleChange}
-                        checkers={[
-                            {
-                                rule:value => value !== "",
-                                errorMsg:"新事项不能为空，请输入！"
-                            },
-                            {
-                                rule:value => parseInt(value) % 100 === 0,
-                                errorMsg:"必须为100的整数倍！"
-                            }
-                        ]}
-                        interceptor={["isNumber","length<11"]}
+                        interceptor={["isInteger","maxLength:11"]}
                     />
-                    <Button amStyle="primary" amSize="small" onClick={() => { this.openModal() }  }>增加</Button>
+                    <FieldWithValidator
+                        type="text"
+                        fieldName="userName"
+                        value={userName}
+                        onChange={this.handleChange}
+                    />
+                    <Button amStyle="primary" amSize="small" onClick={this.handleAddTodoBtnClick}>增加</Button>
                 </div>
                 <div className="todo-list">
                     {
@@ -138,7 +145,7 @@ class Todo extends Component {
                     role="alert"
                     onDismiss={() => { this.closeModal(() => { this.addTodo() }) }}
                 >
-                    测试 ui state 跟组件的组合！
+                    你确定要提交这条新的todo事项吗？
                 </Modal>
             </div>
         );
