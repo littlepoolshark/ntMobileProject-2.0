@@ -10,7 +10,7 @@ import Icon from "./UIComponents/Icon";
 import Modal from "./UIComponents/modal/Modal";
 import Button from "./UIComponents/Button";
 import Message from "./UIComponents/Message";
-import FieldWithValidator from "./HOCs/Validator";
+import FieldWithInterceptor from "./HOCs/Interceptor";
 
 
 
@@ -93,26 +93,26 @@ class Todo extends Component {
             userName
         } = this.localState;
 
-        console.log('userName:',userName)
         
         return (
             <div className="todo">
                 <div className="test">{globalText}</div>
                 <Icon name="right" amStyle="primary" />
                 <div className="todo-form">
-                    <FieldWithValidator
+                    <FieldWithInterceptor
                         type="text"
                         fieldName="newTodoItem"
                         onKeyDown={(event) => { this.handleFieldKeyDown(event) }}
                         value={newTodoItem}
                         onChange={this.handleChange}
-                        interceptor={["isInteger","maxLength:11"]}
+                        interceptor={["isPhoneNo"]}
                     />
-                    <FieldWithValidator
+                    <FieldWithInterceptor
                         type="text"
                         fieldName="userName"
                         value={userName}
                         onChange={this.handleChange}
+                        interceptor={["maxLength:20"]}
                     />
                     <Button amStyle="primary" amSize="small" onClick={this.handleAddTodoBtnClick}>增加</Button>
                 </div>

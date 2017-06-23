@@ -1,6 +1,7 @@
 import { observable, action, computed  } from "mobx";
+import Validator from "../components/utilities/validator";
 
-export default class TodoStore {
+export default class TodoStore extends Validator {
     @observable todoList;
     @observable test;
     @observable newTodoItem;
@@ -8,33 +9,33 @@ export default class TodoStore {
 
 
     constructor(){
-        this.todoList=[];
-        this.test="asdfsad";
-        this.newTodoItem="13682330541";
-        this.userName="sam liu";
-
-        this.checker={
+        super({
             newTodoItem:[
                 {
-                    rule:value => value !== "",
+                    rule:"isRequired",
                     errorMsg:"新事项不能为空，请重新输入！"
                 },
                 {
-                    rule:value => value.length === 11,
+                    rule:"isPhoneNo",
                     errorMsg:"手机号码的格式不对，请检查！"
                 },
             ],
             userName:[
                 {
-                    rule:value => value !== "",
+                    rule:"isRequired",
                     errorMsg:"用户名不能为空，请重新输入！"
                 },
                  {
-                    rule:value => value.length < 30,
+                    rule:"maxLength:20",
                     errorMsg:"用户名长度不合格，请检查！"
                 },
             ]
-        }
+        });
+
+        this.todoList=[];
+        this.test="asdfsad";
+        this.newTodoItem="1.36";
+        this.userName="sam liu";
 
     }
 
@@ -75,29 +76,6 @@ export default class TodoStore {
 
     @computed get activeTodoCount(){
         return this.todoList.filter((item,index) => !item.isFinished).length;
-    }
-
-    formCheckResult(){
-        let formCheckResult={
-            success:true,
-            errorMsg:""
-        };
-
-        let fields=Object.keys(this.checker);
-
-        for(let i=0; i< fields.length ; i++){
-            let rules=this.checker[fields[i]];
-            for(let j=0; j<rules.length ; j++){
-                console.log(this[fields[i]])
-                if(!rules[j].rule.call(null,this[fields[i]])){
-                    formCheckResult.success=false;
-                    formCheckResult.errorMsg=rules[j].errorMsg;
-                    break;
-                }
-            }
-        }
-
-        return formCheckResult;   
     }
 
 }
