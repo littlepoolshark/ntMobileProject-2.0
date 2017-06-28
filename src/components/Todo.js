@@ -74,7 +74,6 @@ class Todo extends Component {
     }
 
     handleChange = (fieldName,newValue) => {
-        //let newValue=event.target.value;
         this.localState.changeNewItemValue(fieldName,newValue);
     }
 
@@ -149,6 +148,10 @@ class Todo extends Component {
                 </Modal>
             </div>
         );
+    }
+
+    componentDidMount(){
+        this.localState.getTodoList();
     }
 
     //  componentWillReact() {
