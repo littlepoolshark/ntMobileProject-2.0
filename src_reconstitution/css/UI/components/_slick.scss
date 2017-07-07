@@ -1,0 +1,34 @@
+
+.slider-container {
+    width:100%;
+    overflow:hidden;
+    overflow-x: scroll;
+
+    ul.slider-wrapper {
+        width: auto;
+        height:100%;
+        background: skyblue;
+        list-style:none;
+        padding:0;
+        margin:0;
+        transform:translate3d(0,0,0);//调用系统的GPU来加速css动画的渲染
+        
+
+        &.animate {
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        &>li {
+            width:auto;
+            height:100%;
+            float:left;
+
+            & > img {
+                display:block;
+                width:100%;
+                height:auto;
+            }
+
+        }
+    }
+}

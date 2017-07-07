@@ -23,9 +23,22 @@
   @include size($size, $size);
 }
 
-// TODO: add scrollableX & scrollableY
+
 @mixin scrollable() {
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin scrollableX {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin scrollableY {
+  max-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 

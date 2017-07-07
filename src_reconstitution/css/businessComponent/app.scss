@@ -1,0 +1,77 @@
+@import "../UI/helper/mixins";
+@import "../UI/helper/functions";
+@import "../UI/helper/animation";
+
+
+.appContainer {
+    width:100%;
+    height:100%;
+    //padding:45px 0 55px;
+    display: flex;
+    flex-direction: column;
+    
+    & > header,
+    & > nav {
+        flex:0 0 auto;
+    }
+
+    & > .main {
+        width:100%;
+        height:100%;
+        
+        flex: 1 1 auto;
+        overflow: hidden;
+
+        & > div {
+            width:100%;
+            height:100%;
+            @include scrollableY;
+        }
+    }
+
+    // .middlePart {
+    //     width:100%;
+    //     height:100%;
+
+    //     & > div {
+    //         width:100%;
+    //         height:100%;
+    //         padding:15px;
+    //         overflow: scroll;
+    //         webkit-overflow-scrolling: touch;
+    //     }
+    // }
+    
+
+    .nt-navBar {
+        // position: fixed;
+        // left:0;
+        // top:0;
+        width:100%;
+        height:45px;
+        padding:0 15px;
+        color:#fff;
+        background-color: red;
+        display: flex;
+        align-items: center;
+
+        .nt-navBar-left,
+        .nt-navBar-right {
+            flex:0 0 25%;
+
+            .icon {
+                font-size:1rem;
+            }
+        }
+
+        .nt-navBar-right {
+            text-align:right;
+        }
+
+        .nt-navBar-title {
+            flex:1 1 auto;
+            text-align: center;
+           // @include text-overflow;
+        }
+    }
+}
