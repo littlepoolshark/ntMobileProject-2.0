@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Link, NavLink, Redirect } from "react-router-dom";
 
-import { Home } from "../index";
+import { Home, ProductList } from "../index";
 import { TabBar, Icon, NavBar } from "../../UIComponent/index";
 import pageNameMap from "../../config/pageNameMap";
 
@@ -53,6 +53,11 @@ const App = (props) => {
                         exact
                         path="/home"
                         component={Home}
+                    />
+                     <Route
+                        exact
+                        path="/productList"
+                        component={ProductList}
                     />
                 </div>
 

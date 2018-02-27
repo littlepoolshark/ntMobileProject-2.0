@@ -35,6 +35,7 @@ export {default as Touchable} from './Touchable';
 export {default as View} from './View';
 export {default as Slick} from './Slick';
 export {default as SlickItem} from './SlickItem';
+export {default as Picker} from './Picker';
 
 // Mixins
 export * from './mixins';
