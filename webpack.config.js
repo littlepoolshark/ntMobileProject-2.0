@@ -8,7 +8,7 @@ module.exports={
         "react-hot-loader/patch",
         //activate HMR for React
 
-        "webpack-dev-server/client?http://192.168.1.26:3001",
+        "webpack-dev-server/client?http://localhost:3001",
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -28,7 +28,7 @@ module.exports={
         filename:"app.[hash].js"
     },
     devServer:{
-        host:"192.168.1.26",
+        host:"localhost",
         port:3001,
         publicPath:"/",
         contentBase:path.resolve(__dirname,"dist"),
